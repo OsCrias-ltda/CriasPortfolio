@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" style={{scrollBehavior: 'smooth'}} className="bg-gray-500">
       <body className={inter.className}>{children}</body>
     </html>
   );
