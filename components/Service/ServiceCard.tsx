@@ -11,7 +11,7 @@ export default function ServiceCard(props: any) {
         id="card_service_logo"
         className="flex justify-center items-center"
       >
-        <Image src={props.image} width={32} height={32} alt="Logo" />
+        {props.icon}
       </div>
       <div id="card_service_content" className="flex flex-auto flex-col p-2 space-y-4 h-32 justify-center items-center">
         <p className="text-black">{props.title}</p>

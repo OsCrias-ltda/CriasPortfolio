@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { text_normal } from "@/app/page";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 export default function NavBar() {
@@ -19,8 +18,7 @@ export default function NavBar() {
         <div
           id="links"
           className={
-            "flex-1 flex items-center justify-center w-fit space-x-5 invisible sm:visible " +
-            text_normal.className
+            "flex-1 flex items-center justify-center w-fit space-x-5 invisible sm:visible "
           }
         >
           <Link href="/#Home" scroll={true}>
@@ -51,9 +49,7 @@ export default function NavBar() {
                 tabIndex={0}
                 className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4"
               >
-                <Link href="/#Home">
-                  Home
-                </Link>
+                <Link href="/#Home">Home</Link>
                 <Link href="/#Service">Serviços</Link>
                 <Link href="/#Portfolio">Portfolio</Link>
                 <Link href="/#AboutUs">Quem Somos</Link>

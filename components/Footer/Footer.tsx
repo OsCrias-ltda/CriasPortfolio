@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { text_normal } from "@/app/page";
+
 
 export default function Footer() {
   return (
@@ -23,8 +23,7 @@ export default function Footer() {
       <div
         id="links"
         className={
-          "flex flex-col items-center justify-center w-1/3 h-fit space-y-1 text-sm " +
-          text_normal.className
+          "flex flex-col items-center justify-center w-1/3 h-fit space-y-1 text-sm "
         }
       >
         <p> Contato: </p>

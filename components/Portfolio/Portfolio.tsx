@@ -1,10 +1,12 @@
+
+
 import PortfolioCard from "./PortfolioCard";
 
-export default function Portfolio() {
+export default function Portfolio(props:any) {
   return (
     <div
       id="Portfolio"
-      className="flex flex-col bg-gray-500 items-center justify-start"
+      className="flex flex-col bg-gray-500 items-center place-items-center justify-start"
     >
       <h1 className="text-6xl p-12"> Portfolio </h1>
       <div
@@ -13,12 +15,16 @@ export default function Portfolio() {
       >
         <div
           id="carrousel_portfolio"
-          className="flex carousel space-x-11 px-12 m-4 rounded-xl"
+          className="flex carousel space-x-11 px-12 m-4 rounded-xl justify-center items-center"
         >
-          <PortfolioCard category="teste" title="bolo" description="sei lá" />
-          <PortfolioCard category="teste" title="bolo" description="sei lá" />
-          <PortfolioCard category="teste" title="bolo" description="sei lá" />
-          <PortfolioCard category="teste" title="bolo" description="sei lá" />
+          {
+          // console.log(props)
+          props.data.map(function(repos:any){
+            return <PortfolioCard category="teste" title={repos['name']} description={repos['description']} />
+
+          })
+          }
+
         </div>
       </div>
     </div>
