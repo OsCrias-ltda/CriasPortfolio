@@ -24,7 +24,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: <user>/<nome da imagem>
+          images: criasltda/portfolio
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
@@ -32,4 +32,4 @@ jobs:
           context: .
           platforms: linux/arm64
           push: true
-          tags: <user>/<nome da imagem>
+          tags: criasltda/portfolio
