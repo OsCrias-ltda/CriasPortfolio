@@ -4,9 +4,15 @@ import { DiWebplatform } from "react-icons/di";
 
 export default function Service() {
   return (
-    <div id="Service" className="flex flex-col bg-gray-500 items-center justify-start m-auto">
+    <div
+      id="Service"
+      className="flex flex-col bg-gray-500 items-center justify-start m-auto"
+    >
       <h1 className="text-6xl p-12"> Serviços </h1>
-      <div id="carrousel_Service" className="container bg-white flex sm:flex-row flex-col justify-center rounded-md border space-x-6 p-12 sm:p-6">
+      <div
+        id="carrousel_Service"
+        className="container bg-white flex sm:flex-row flex-col justify-center rounded-md border space-x-6 p-12 sm:p-6"
+      >
         <br></br>
         <ServiceCard
           icon={<DiWebplatform size={32} fill="red" />}

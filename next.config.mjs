@@ -10,6 +10,8 @@ const nextConfig = {
       },
     ],
   },
+  pageExtensions: ["mdx", "md", "jsx", "js", "tsx", "ts"],
+  
 };
 
 export default nextConfig;
