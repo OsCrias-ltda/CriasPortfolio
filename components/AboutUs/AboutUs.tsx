@@ -21,7 +21,7 @@ export default function AboutUs(props: any) {
   return (
     <div
       id="AboutUs"
-      className="flex flex-col w-screen h-screen bg-gray-500 items-center justify-start space-y-24"
+      className="flex flex-col bg-gray-500 items-center place-items-center justify-start space-y-24"
     >
       <h1 className="text-6xl p-12"> Sobre Nós </h1>
 

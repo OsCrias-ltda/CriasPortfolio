@@ -6,12 +6,12 @@ export default function NavBar() {
   return (
     <div
       id="Navbar"
-      className="flex flex-col justify-around text-center w-screen h-[100px] min-w-fit bg-gray-500 rounded-b-sm fixed sm:static z-20"
+      className="flex flex-col justify-around text-center w-screen sm:h-[100px] min-w-fit bg-gray-500 rounded-b-sm fixed sm:static z-20"
     >
       <div className="flex flex-row w-0 h-0 sm:w-screen sm:h-[100px] invisible sm:visible">
         <div
           id="Logo"
-          className="flex-1  flex items-center justify-items-start p-12"
+          className="flex-1 sm:w-fit flex items-center justify-items-start p-12"
         >
           <Image src={"/Logo.png"} width={64} height={64} alt={"logo"} />
         </div>
@@ -31,9 +31,9 @@ export default function NavBar() {
         </div>
       </div>
 
-      <div className="navbar sm:invisible">
+      <div className="navbar h-fit sm:invisible">
         <div className="flex-1 px-2 lg:flex-none">
-          <Image src={"/Logo.png"} width={64} height={64} alt={"logo"} />
+          <Image src={"/Logo.png"} width={32} height={32} alt={"logo"} />
         </div>
         <div className="flex justify-end flex-1 px-2">
           <div className="flex items-stretch">

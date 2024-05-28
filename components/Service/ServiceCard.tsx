@@ -13,7 +13,7 @@ export default function ServiceCard(props: any) {
       >
         {props.icon}
       </div>
-      <div id="card_service_content" className="flex flex-auto flex-col p-2 space-y-4 h-32 justify-center items-center">
+      <div id="card_service_content" className="flex flex-col p-2 space-y-2 h-fit sm:h-32 justify-center items-center">
         <p className="text-black">{props.title}</p>
         <p className="text-black">{props.text}</p>
       </div>

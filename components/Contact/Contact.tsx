@@ -24,7 +24,6 @@ export default function Contact() {
         },
       });
       if (res.ok) {
-        console.log("Yeai!");
       } else {
         console.log("Oops! Something is wrong.");
       }
@@ -42,7 +41,7 @@ export default function Contact() {
   return (
     <div
       id="Contact"
-      className="flex flex-col sm:h-screen bg-gray-500 items-center justify-start space-y-24"
+      className="flex flex-col bg-gray-500 items-center place-items-center justify-start space-y-24"
     >
       <h1 className="text-6xl text-center py-6"> Entre em Contato </h1>
       <div
