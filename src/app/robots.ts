@@ -2,6 +2,9 @@ import type { MetadataRoute } from "next";
 import { getActiveTenant } from "@/core/data";
 import { getEffectiveSiteUrl } from "@/core/lib/utils";
 
+// Dinâmico em runtime para respeitar APP_ENV=staging direto do Env do Dokploy
+export const dynamic = "force-dynamic";
+
 export default async function robots(): Promise<MetadataRoute.Robots> {
   if (process.env.APP_ENV === "staging") {
     return {

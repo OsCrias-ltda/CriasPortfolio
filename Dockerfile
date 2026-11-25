@@ -12,14 +12,11 @@ RUN npm ci
 
 # Stage 2: build de produção Next.js (output standalone)
 FROM base AS builder
-# Opcional: se não informado, o app usa DEFAULT_TENANT_SLUG de src/tenants/index.ts
-ARG ACTIVE_TENANT
-ARG APP_ENV=production
 ARG NEXT_PUBLIC_BASE_URL
+ARG ACTIVE_TENANT
 
-ENV ACTIVE_TENANT=${ACTIVE_TENANT}
-ENV APP_ENV=${APP_ENV}
 ENV NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
+ENV ACTIVE_TENANT=${ACTIVE_TENANT}
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -29,14 +26,10 @@ RUN npm run build
 FROM node:22-alpine AS runner
 WORKDIR /app
 
-ARG ACTIVE_TENANT
-ARG APP_ENV=production
 ARG NEXT_PUBLIC_BASE_URL
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV ACTIVE_TENANT=${ACTIVE_TENANT}
-ENV APP_ENV=${APP_ENV}
 ENV NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0

@@ -57,3 +57,4 @@ jobs:
       - name: Trigger Dokploy Deployment
         run: |
           curl -X POST "${{ secrets.STAGING_DOKPLOY_WEBHOOK }}"
+
