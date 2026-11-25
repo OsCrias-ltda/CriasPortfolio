@@ -1,7 +1,8 @@
+import { getEffectiveSiteUrl } from "@/core/lib/utils";
 import type { TenantConfig } from "@/core/schema/tenant-config.schema";
 
 export function buildLlmsTxt(config: TenantConfig): string {
-  const siteUrl = config.seo.siteUrl.replace(/\/$/, "");
+  const siteUrl = getEffectiveSiteUrl(config.seo.siteUrl);
   const servicesSection = config.sections.find(
     (s) => s.blockType === "services" && s.enabled
   );

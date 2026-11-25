@@ -1,7 +1,8 @@
+import { getEffectiveSiteUrl } from "@/core/lib/utils";
 import type { ProjectCase, TenantConfig } from "@/core/schema/tenant-config.schema";
 
 export function buildHomeJsonLd(config: TenantConfig): Record<string, unknown>[] {
-  const siteUrl = config.seo.siteUrl.replace(/\/$/, "");
+  const siteUrl = getEffectiveSiteUrl(config.seo.siteUrl);
   const organizationId = `${siteUrl}/#organization`;
   const websiteId = `${siteUrl}/#website`;
 
@@ -103,7 +104,7 @@ export function buildProjectJsonLd(
   config: TenantConfig,
   project: ProjectCase
 ): Record<string, unknown>[] {
-  const siteUrl = config.seo.siteUrl.replace(/\/$/, "");
+  const siteUrl = getEffectiveSiteUrl(config.seo.siteUrl);
   const projectUrl = `${siteUrl}/projetos/${project.slug}`;
   const isSoftware =
     project.category.toLowerCase().includes("sistema") ||

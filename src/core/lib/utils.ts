@@ -74,3 +74,11 @@ export function escapeHtml(input: string): string {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
 }
+
+export function getEffectiveSiteUrl(fallbackSiteUrl: string): string {
+  const envUrl = process.env.NEXT_PUBLIC_BASE_URL?.trim();
+  if (envUrl && /^https?:\/\//i.test(envUrl)) {
+    return envUrl.replace(/\/$/, "");
+  }
+  return fallbackSiteUrl.replace(/\/$/, "");
+}

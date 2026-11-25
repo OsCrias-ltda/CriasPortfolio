@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { getEffectiveSiteUrl } from "@/core/lib/utils";
 import type { ProjectCase, TenantConfig } from "@/core/schema/tenant-config.schema";
 
 export function buildHomeMetadata(config: TenantConfig): Metadata {
-  const siteUrl = config.seo.siteUrl.replace(/\/$/, "");
+  const siteUrl = getEffectiveSiteUrl(config.seo.siteUrl);
   const ogImages = config.seo.ogImage ? [{ url: config.seo.ogImage }] : undefined;
+  const isStaging = process.env.APP_ENV === "staging";
 
   return {
     metadataBase: new URL(siteUrl),
@@ -15,6 +17,7 @@ export function buildHomeMetadata(config: TenantConfig): Metadata {
     alternates: {
       canonical: siteUrl,
     },
+    robots: isStaging ? { index: false, follow: false } : undefined,
     icons: {
       icon: config.seo.favicon,
     },
@@ -40,9 +43,10 @@ export function buildProjectMetadata(
   config: TenantConfig,
   project: ProjectCase
 ): Metadata {
-  const siteUrl = config.seo.siteUrl.replace(/\/$/, "");
+  const siteUrl = getEffectiveSiteUrl(config.seo.siteUrl);
   const canonicalUrl = `${siteUrl}/projetos/${project.slug}`;
-  const shouldIndex = !project.isPlaceholder && project.indexable;
+  const isStaging = process.env.APP_ENV === "staging";
+  const shouldIndex = !isStaging && !project.isPlaceholder && project.indexable;
   const description = `${project.objective} ${project.summary}`.slice(0, 160);
 
   return {

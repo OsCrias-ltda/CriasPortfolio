@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
 import { getActiveTenant } from "@/core/data";
+import { getEffectiveSiteUrl } from "@/core/lib/utils";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const config = await getActiveTenant({ preferStatic: true });
   if (!config) return [];
 
-  const siteUrl = config.seo.siteUrl.replace(/\/$/, "");
+  const siteUrl = getEffectiveSiteUrl(config.seo.siteUrl);
   const now = new Date();
 
   const entries: MetadataRoute.Sitemap = [
