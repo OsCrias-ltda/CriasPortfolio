@@ -37,11 +37,11 @@ Identifique o contexto do pedido antes de responder:
   - Customização livre de: ordem/habilitação de blocos, **variantes de Hero**, **tipografia**, paleta semântica, estilo de imagens, conteúdo e SEO/AEO.
   - **Escape Hatch:** Seções exclusivas de um cliente ficam isoladas em `src/tenants/<slug>/sections/` e registradas sem contaminar o Core.
 
-### B. Multi-Tenant Real
+### B. Multi-Tenant Real & Clonagem Single-Tenant
 
-- **Resolução de tenant:** Por domínio/subdomínio em produção e por slug/parâmetro em desenvolvimento local.
+- **Resolução de tenant:** Suporte a resolução por domínio/subdomínio em produção, por slug/parâmetro em desenvolvimento local e por variável de ambiente (`ACTIVE_TENANT`) em deploys single-tenant clonados — mantendo sempre o isolamento 70/30.
 - **Isolamento visual sem FOUC:** Injeção SSR/SSG de CSS Variables semânticas e fontes por tenant.
-- **Resiliência:** Página 404 dedicada para tenant inexistente e fallback seguro para campos/seções opcionais ausentes.
+- **Resiliência:** Página 404 dedicada para tenant ou rota dinâmica (ex.: `/projetos/[slug]`) inexistente e fallback seguro para campos/seções opcionais ausentes.
 
 ### C. Stack e Biblioteca de UI
 
@@ -61,14 +61,15 @@ Identifique o contexto do pedido antes de responder:
 
 Todo portfólio deve ser gerado otimizado para **SEO** e **AEO (Answer Engine Optimization)**:
 
-- **SEO Técnico (por tenant):**
-  - Conteúdo principal renderizado via SSR/SSG (HTML completo e semântico no primeiro byte).
+- **SEO Técnico (por tenant e por case):**
+  - Conteúdo principal e páginas de detalhe de projeto (`/projetos/[slug]`) renderizados via SSR/SSG (HTML completo e semântico no primeiro byte).
   - `title`, `description`, `canonical` (com domínio real do tenant), OpenGraph, Twitter Cards e favicon dinâmicos via config.
-  - `sitemap.xml` e `robots.txt` dinâmicos por tenant.
-  - Core Web Vitals: imagens otimizadas com `alt` descritivo, `priority` no LCP (Hero), dimensões explícitas (evitar CLS) e fontes otimizadas.
+  - `sitemap.xml` e `robots.txt` dinâmicos por tenant (incluindo apenas páginas de projetos reais/indexáveis).
+  - **Proteção contra indexação de placeholders:** Projetos marcados como placeholder (`isPlaceholder: true` / `indexable: false`) permanecem navegáveis para preview, mas devem emitir `noindex, nofollow` e ficar fora do `sitemap.xml` até receberem dados reais.
+  - Core Web Vitals: imagens otimizadas com `alt` descritivo, `priority` no LCP (Hero / capa do case), dimensões explícitas (evitar CLS) e fontes otimizadas.
 - **AEO (Recomendação por Agentes de IA):**
   - **Entity-First:** Hero e abertura deixam inequívocos _quem é_, _o que faz_, _para quem_, _onde atua_ e _qual problema resolve_ (alinhado ao Proof Statement).
-  - **JSON-LD (Schema.org) via Config:** Emissão automática de `application/ld+json` válido combinando `Organization` / `Person` / `LocalBusiness` (com `sameAs`, `areaServed`, `contactPoint`), `Service`/`Offer`, `FAQPage`, `WebSite` e `BreadcrumbList`.
+  - **JSON-LD (Schema.org) via Config:** Emissão automática de `application/ld+json` válido combinando `Organization` / `Person` / `LocalBusiness` / `ProfessionalService` (com `sameAs`, `areaServed`, `contactPoint`), `Service`/`Offer`, `FAQPage`, `WebSite`, `BreadcrumbList` e `CreativeWork`/`SoftwareApplication` nas páginas de projeto.
   - **Conteúdo citável:** `H1` único por página; `H2`/`H3` descritivos (sem títulos obscuros); respostas de FAQ objetivas (40–60 palavras); listas claras de serviços/entregáveis.
   - **`/llms.txt` dinâmico por tenant:** Resumo em Markdown limpo gerado do `TenantConfig` (entidade, proposta de valor, serviços, diferenciais, contatos e links).
   - **`robots.txt` consciente para IA:** Permitir por padrão (configurável por tenant) crawlers de busca e recomendação (`Googlebot`, `OAI-SearchBot`, `PerplexityBot`, `Claude-SearchBot`).
@@ -84,9 +85,9 @@ Todo portfólio deve ser gerado otimizado para **SEO** e **AEO (Answer Engine Op
 - **Blocos Core esperados:**
   - Layout: `TenantLayout`, `Header`, `MobileMenu`, `Footer`, `Container`, `SectionWrapper`.
   - Hero (alta variedade): `HeroSplit`, `HeroCentered`, `HeroEditorial`, `HeroFullBleedImage`, `HeroMinimal`.
-  - Conteúdo & AEO: `SectionHeading`, `ValueProposition`, `FeatureGrid`, `ServiceList`, `ProjectShowcase`, `ProcessSteps`, `Testimonials`, `MetricsStrip`, `AboutSplit`, `FAQAccordion` (com JSON-LD `FAQPage`).
+  - Conteúdo & AEO: `SectionHeading`, `ValueProposition`, `FeatureGrid`, `ServiceList`, `ProjectShowcase`, `ProjectDetailPage` (rota Core `/projetos/[slug]` com breadcrumb, cabeçalho do case, narrativa _Problema → Solução → Entregáveis & Stack_, galeria de telas da interface com legendas, navegação entre cases e CTA contextual), `ProcessSteps`, `Testimonials`, `MetricsStrip`, `AboutSplit`, `FAQAccordion` (com JSON-LD `FAQPage`).
   - Conversão: `CTABanner`, `ContactSection` (desacoplado + links diretos/WhatsApp).
-- **Schema `TenantConfig` mínimo:** separar `tenant`, `business` (incluindo `proofStatement`, `voiceCard`, `sameAs`), `seo`, `aeo`, `theme`, `cta`, `navigation` e `sections`.
+- **Schema `TenantConfig` mínimo:** separar `tenant`, `business` (incluindo `proofStatement`, `voiceCard`, `sameAs`), `seo`, `aeo`, `theme`, `cta`, `navigation`, `projects` (fonte única para `ProjectShowcase`, `/projetos/[slug]`, `sitemap.xml` e `/llms.txt`) e `sections`.
 - **Política Anti-Clichê (PT-BR):** Copy sempre guiada pelo **Voice Card**. **PROIBIDO** usar expressões genéricas como _"soluções inovadoras"_, _"tecnologia de ponta"_, _"apaixonados por excelência"_, _"transformando desafios em oportunidades"_, _"transformando sonhos em realidade"_, _"levar seu negócio ao próximo nível"_, _"sob medida para o seu sucesso"_.
 
 ---
@@ -129,14 +130,14 @@ Trabalhe com **gates de aprovação**. Ao final de cada fase, entregue um artefa
 
 > _Atualizar os comandos abaixo assim que a stack da Fase 1 for inicializada:_
 
-- Typecheck: `[preencher após setup, ex: pnpm typecheck]`
-- Lint: `[preencher após setup, ex: pnpm lint]`
-- Build: `[preencher após setup, ex: pnpm build]`
-- Tests: `[preencher após setup, ex: pnpm test]`
+- Typecheck: `npm run typecheck`
+- Lint: `npm run lint`
+- Build: `npm run build`
+- Tests: `[não configurado ainda]`
 
 Antes de concluir qualquer implementação ou entrega da Fase 4, valide:
 
 - [ ] **Conversão & Voz:** Proof Statement claro no Hero; CTA visível com próximo passo claro; copy fiel ao Voice Card e zero clichês proibidos.
-- [ ] **SEO & AEO:** SSR/HTML semântico (`H1` único); `title`/`description`/`canonical`/OG dinâmicos; JSON-LD válido; `sitemap.xml`, `robots.txt` e `/llms.txt` funcionando por tenant; FAQ/blocos objetivos e citáveis.
+- [ ] **SEO & AEO:** SSR/HTML semântico (`H1` único por página); `title`/`description`/`canonical`/OG dinâmicos; JSON-LD válido (incluindo cases em `/projetos/[slug]`); `sitemap.xml`, `robots.txt` e `/llms.txt` funcionando por tenant; proteção `noindex` para cases em placeholder; FAQ/blocos objetivos e citáveis.
 - [ ] **70/30 & Multi-Tenant:** Novo tenant funciona só trocando config/tema/ordem de blocos; zero código específico de cliente no Core; adapter CMS isolado.
 - [ ] **Acessibilidade & Qualidade:** Mobile-first; contraste WCAG AA (`>= 4.5:1`); teclado e foco visível; `prefers-reduced-motion`; `alt` descritivo; validação de schema + fallback seguro; `typecheck`, `lint` e `build` passando sem erros.

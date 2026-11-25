@@ -1,23 +1,22 @@
 ARG PLATFORM=linux/amd64
-#ARG PLATFORM=linux/arm64
-#ARG IMAGE=arm64v8/node:18-alpine
-ARG IMAGE=node:18-alpine
+ARG IMAGE=node:22-alpine
 
 FROM --platform=$PLATFORM $IMAGE AS build
 
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
 COPY . .
 
-RUN npm run build \
-    && npm prune --omit=dev
+RUN npm run build
 
-FROM  --platform=linux/arm64 arm64v8/node:18-alpine
+FROM --platform=linux/arm64 arm64v8/node:22-alpine
 
 WORKDIR /app
+
+ENV NODE_ENV=production
 
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/.next ./.next
