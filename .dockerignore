@@ -1,1 +1,27 @@
+# Dependências e artefatos de build locais
+node_modules
+.next
+out
+build
+
+# Controle de versão e CI
+.git
+.gitignore
+.github
+
+# Segredos e arquivos de ambiente
 .env
+.env.*
+!.env.example
+
+# Documentação e metadados não necessários no build
+README.md
+AGENTS.md
+CLAUDE.md
+Dockerfile
+.dockerignore
+
+# Logs e caches
+npm-debug.log*
+*.log
+.DS_Store
