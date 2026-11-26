@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+set -eu
+
+echo "🔍 [pre-commit] Executando validações locais antes do commit..."
+
+echo "→ 1/3 Typecheck (TypeScript)..."
+npm run typecheck
+
+echo "→ 2/3 Lint (ESLint)..."
+npm run lint
+
+echo "→ 3/3 Testes automatizados (Schema, Presets, SEO/AEO e 70/30)..."
+npm test
+
+echo "✅ [pre-commit] Todas as validações passaram!"
