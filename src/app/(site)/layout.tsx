@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getActiveTenant } from "@/core/data";
-import { isDesignPreviewEnabled } from "@/core/design/presets";
-import { DesignPreviewSwitcher } from "@/core/design/design-preview-switcher";
+import { isDesignPreviewEnabled } from "@/core/presets";
+import { DesignPreviewSwitcher } from "@/core/presets/preview-switcher";
 import { TenantLayout } from "@/core/sections/layout/tenant-layout";
 
 export default async function SiteLayout({

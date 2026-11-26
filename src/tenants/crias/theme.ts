@@ -1,10 +1,17 @@
-import { DESIGN_PRESETS } from "@/core/design/presets";
-import type { TenantConfig } from "@/core/schema/tenant-config.schema";
+import type { TenantThemeOverrides } from "@/core/schema/tenant-config.schema";
 
 /**
- * Tema oficial da Crias Ltda baseado no preset comercial "studio",
- * preservando a assinatura laranja (#F97316) e tipografia comercial/técnica.
+ * Identidade visual proposta pelo tenant Crias Ltda (cor de marca e tipografia).
+ * Superfícies, esquema claro/escuro, bordas e demais tokens caem no fallback do preset ativo.
  */
-export const criasTheme: TenantConfig["theme"] = {
-  ...DESIGN_PRESETS.studio.theme,
+export const criasTheme: TenantThemeOverrides = {
+  colors: {
+    primary: "#F97316",
+    accent: "#FB923C",
+  },
+  fonts: {
+    heading: "plus-jakarta-sans",
+    body: "inter",
+    accent: "jetbrains-mono",
+  },
 };

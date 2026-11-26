@@ -1,14 +1,14 @@
-import type { TenantConfig } from "@/core/schema/tenant-config.schema";
+import type { ResolvedTheme } from "@/core/schema/tenant-config.schema";
 import { getFontCssStack } from "@/core/theme/font-registry";
 
-const RADIUS_MAP: Record<TenantConfig["theme"]["radius"], string> = {
+const RADIUS_MAP: Record<ResolvedTheme["radius"], string> = {
   none: "0px",
   sm: "0.375rem",
   md: "0.625rem",
   lg: "0.875rem",
 };
 
-export function buildTenantThemeCss(theme: TenantConfig["theme"]): string {
+export function buildTenantThemeCss(theme: ResolvedTheme): string {
   const { colors, fonts, radius, colorScheme } = theme;
   const radiusValue = RADIUS_MAP[radius];
 
@@ -60,7 +60,7 @@ export function TenantThemeStyle({
   theme,
   id = "tenant-theme-tokens",
 }: {
-  theme: TenantConfig["theme"];
+  theme: ResolvedTheme;
   id?: string;
 }) {
   return (

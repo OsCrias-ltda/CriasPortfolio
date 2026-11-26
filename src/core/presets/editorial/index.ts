@@ -1,0 +1,9 @@
+export { editorialPreset } from "@/core/presets/editorial/preset";
+export { EditorialHeader } from "@/core/presets/editorial/header";
+export { EditorialHero } from "@/core/presets/editorial/hero";
+export { EditorialServices } from "@/core/presets/editorial/services";
+export { EditorialProjects } from "@/core/presets/editorial/projects";
+export { EditorialProcess } from "@/core/presets/editorial/process";
+export { EditorialAbout } from "@/core/presets/editorial/about";
+export { EditorialContact } from "@/core/presets/editorial/contact";
+export { EditorialFooter } from "@/core/presets/editorial/footer";
