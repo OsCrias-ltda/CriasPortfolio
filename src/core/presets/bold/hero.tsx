@@ -8,7 +8,7 @@ import type { z } from "zod";
 
 type HeroSectionData = z.infer<typeof HeroSectionSchema>;
 
-export function HeroBoldImpact({
+export function BoldHero({
   section,
   config,
 }: {
@@ -55,7 +55,6 @@ export function HeroBoldImpact({
         </Container>
       </div>
 
-      {/* Faixa sólida de alto impacto na cor primária */}
       {section.highlights.length > 0 && (
         <div className="border-y border-primary bg-primary text-primary-foreground">
           <Container>

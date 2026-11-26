@@ -192,7 +192,7 @@ export const criasConfig: TenantConfig = {
       ctaLabel: "Ver detalhes e telas",
       showGitHubLink: true,
       githubUrl: "https://github.com/OsCrias-ltda",
-      githubLabel: "GitHub da Crias",
+      githubLabel: "GitHub dos Crias",
     },
     {
       id: "como-funciona",

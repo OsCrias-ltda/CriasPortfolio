@@ -5,9 +5,11 @@ import {
   DESIGN_PRESETS,
   applyDesignPreset,
   isDesignPreviewEnabled,
+  isValidColorPreset,
   isValidDesignPreset,
-} from "@/core/design/presets";
-import { DesignPreviewSwitcher } from "@/core/design/design-preview-switcher";
+  resolveTenantTheme,
+} from "@/core/presets";
+import { DesignPreviewSwitcher } from "@/core/presets/preview-switcher";
 import { SectionRenderer } from "@/core/registry/section-renderer";
 import { TenantLayout } from "@/core/sections/layout/tenant-layout";
 import { TenantThemeStyle } from "@/core/theme/theme-provider";
@@ -17,6 +19,7 @@ export const dynamic = "force-dynamic";
 
 interface PreviewPageProps {
   params: Promise<{ preset: string }>;
+  searchParams: Promise<{ color?: string }>;
 }
 
 export async function generateMetadata({
@@ -36,12 +39,19 @@ export async function generateMetadata({
   };
 }
 
-export default async function DesignPreviewPage({ params }: PreviewPageProps) {
+export default async function DesignPreviewPage({
+  params,
+  searchParams,
+}: PreviewPageProps) {
   if (!isDesignPreviewEnabled()) {
     notFound();
   }
 
-  const { preset } = await params;
+  const [{ preset }, resolvedSearchParams] = await Promise.all([
+    params,
+    searchParams,
+  ]);
+
   if (!isValidDesignPreset(preset)) {
     notFound();
   }
@@ -51,22 +61,34 @@ export default async function DesignPreviewPage({ params }: PreviewPageProps) {
     notFound();
   }
 
-  const previewConfig = applyDesignPreset(baseConfig, preset);
+  const rawColor = resolvedSearchParams.color;
+  const activeColorPreset =
+    rawColor && isValidColorPreset(rawColor) ? rawColor : undefined;
+
+  const previewConfig = applyDesignPreset(baseConfig, preset, activeColorPreset);
+  const resolvedTheme = resolveTenantTheme(previewConfig);
   const customSections = getTenantCustomSections(previewConfig.tenant.slug);
+  const homeHref = activeColorPreset
+    ? `/preview/${preset}?color=${activeColorPreset}`
+    : `/preview/${preset}`;
 
   return (
     <>
       <TenantThemeStyle
-        key={preset}
+        key={`${preset}-${activeColorPreset ?? "tenant"}`}
         id="preview-theme-tokens"
-        theme={previewConfig.theme}
+        theme={resolvedTheme}
       />
-      <TenantLayout config={previewConfig} homeHref={`/preview/${preset}`}>
+      <TenantLayout config={previewConfig} homeHref={homeHref}>
         <SectionRenderer
           config={previewConfig}
           customSections={customSections}
         />
-        <DesignPreviewSwitcher activePreset={preset} isPreviewRoute />
+        <DesignPreviewSwitcher
+          activePreset={preset}
+          activeColorPreset={activeColorPreset}
+          isPreviewRoute
+        />
       </TenantLayout>
     </>
   );

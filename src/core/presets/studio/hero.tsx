@@ -12,7 +12,7 @@ import type { z } from "zod";
 
 type HeroSectionData = z.infer<typeof HeroSectionSchema>;
 
-export function HeroStudioSplit({
+export function StudioHero({
   section,
   config,
 }: {
@@ -28,7 +28,6 @@ export function HeroStudioSplit({
       id={section.id}
       className="relative overflow-hidden py-16 sm:py-24 lg:py-28"
     >
-      {/* Luz ambiente sutil de estúdio */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-40 left-1/2 h-[480px] w-[760px] -translate-x-1/2 rounded-full bg-primary/10 blur-[130px]"
@@ -36,7 +35,6 @@ export function HeroStudioSplit({
 
       <Container className="relative">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
-          {/* Coluna principal de valor e conversão */}
           <div className="min-w-0 space-y-7 lg:col-span-7">
             {section.eyebrow && (
               <Badge
@@ -80,7 +78,6 @@ export function HeroStudioSplit({
             )}
           </div>
 
-          {/* Painel visual comercial / vitrine de entregas */}
           <div className="min-w-0 lg:col-span-5">
             {section.media?.src ? (
               <div className="rounded-xl border border-border/80 bg-card/80 p-2 shadow-2xl shadow-black/25 backdrop-blur-sm">
@@ -88,7 +85,6 @@ export function HeroStudioSplit({
               </div>
             ) : (
               <div className="overflow-hidden rounded-xl border border-border/90 bg-card/90 shadow-2xl shadow-black/25 backdrop-blur-sm">
-                {/* Barra de janela estilo produto digital */}
                 <div className="flex items-center justify-between border-b border-border/80 bg-surface-elevated/80 px-4 py-3">
                   <div className="flex items-center gap-1.5" aria-hidden="true">
                     <span className="h-2.5 w-2.5 rounded-full bg-border" />

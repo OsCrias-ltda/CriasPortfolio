@@ -1,0 +1,9 @@
+export { studioPreset } from "@/core/presets/studio/preset";
+export { StudioHeader } from "@/core/presets/studio/header";
+export { StudioHero } from "@/core/presets/studio/hero";
+export { StudioServices } from "@/core/presets/studio/services";
+export { StudioProjects } from "@/core/presets/studio/projects";
+export { StudioProcess } from "@/core/presets/studio/process";
+export { StudioAbout } from "@/core/presets/studio/about";
+export { StudioContact } from "@/core/presets/studio/contact";
+export { StudioFooter } from "@/core/presets/studio/footer";

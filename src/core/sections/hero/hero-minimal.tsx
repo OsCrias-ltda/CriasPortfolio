@@ -1,6 +1,7 @@
 import { Badge } from "@/core/ui/badge";
 import { Container } from "@/core/sections/layout/container";
 import { HeroActions } from "@/core/sections/hero/hero-actions";
+import { resolveTenantTheme } from "@/core/presets";
 import type { HeroSectionSchema, TenantConfig } from "@/core/schema/tenant-config.schema";
 import type { z } from "zod";
 import { cn } from "@/core/lib/utils";
@@ -15,7 +16,7 @@ interface HeroVariantProps {
 export function HeroMinimal({ section, config }: HeroVariantProps) {
   const primary = section.primaryCta ?? config.cta.primary;
   const secondary = section.secondaryCta ?? config.cta.secondary;
-  const useGrid = config.theme.surfaceStyle === "grid";
+  const useGrid = resolveTenantTheme(config).surfaceStyle === "grid";
 
   return (
     <section

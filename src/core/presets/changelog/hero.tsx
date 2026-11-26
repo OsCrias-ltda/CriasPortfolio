@@ -8,7 +8,7 @@ import type { z } from "zod";
 
 type HeroSectionData = z.infer<typeof HeroSectionSchema>;
 
-export function HeroChangelog({
+export function ChangelogHero({
   section,
   config,
 }: {

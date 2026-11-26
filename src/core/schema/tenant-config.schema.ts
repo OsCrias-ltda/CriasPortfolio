@@ -22,6 +22,18 @@ export const DesignPresetKeySchema = z.enum([
 ]);
 export type DesignPresetKey = z.infer<typeof DesignPresetKeySchema>;
 
+export const ColorPresetKeySchema = z.enum([
+  "orange",
+  "blue",
+  "emerald",
+  "violet",
+  "rose",
+  "amber",
+  "cyan",
+  "zinc",
+]);
+export type ColorPresetKey = z.infer<typeof ColorPresetKeySchema>;
+
 export const HeaderVariantSchema = z.enum(["floating", "editorial", "compact"]);
 export type HeaderVariant = z.infer<typeof HeaderVariantSchema>;
 
@@ -371,6 +383,47 @@ export const SectionConfigSchema = z.discriminatedUnion("blockType", [
 
 export type SectionConfig = z.infer<typeof SectionConfigSchema>;
 
+export const ThemeColorsSchema = z.object({
+  bg: z.string().min(4),
+  surface: z.string().min(4),
+  surfaceElevated: z.string().min(4),
+  border: z.string().min(4),
+  text: z.string().min(4),
+  muted: z.string().min(4),
+  primary: z.string().min(4),
+  primaryForeground: z.string().min(4),
+  secondary: z.string().min(4),
+  secondaryForeground: z.string().min(4),
+  accent: z.string().min(4),
+});
+
+export const ThemeFontsSchema = z.object({
+  heading: FontKeySchema,
+  body: FontKeySchema,
+  accent: FontKeySchema,
+});
+
+export const ResolvedThemeSchema = z.object({
+  colorScheme: z.enum(["dark", "light"]).default("dark"),
+  colors: ThemeColorsSchema,
+  fonts: ThemeFontsSchema,
+  radius: z.enum(["none", "sm", "md", "lg"]).default("md"),
+  surfaceStyle: z.enum(["minimal", "grid", "brutalist"]).default("grid"),
+});
+
+export type ResolvedTheme = z.infer<typeof ResolvedThemeSchema>;
+
+export const TenantThemeOverridesSchema = z.object({
+  colorScheme: z.enum(["dark", "light"]).optional(),
+  colorPreset: ColorPresetKeySchema.optional(),
+  colors: ThemeColorsSchema.partial().optional(),
+  fonts: ThemeFontsSchema.partial().optional(),
+  radius: z.enum(["none", "sm", "md", "lg"]).optional(),
+  surfaceStyle: z.enum(["minimal", "grid", "brutalist"]).optional(),
+});
+
+export type TenantThemeOverrides = z.infer<typeof TenantThemeOverridesSchema>;
+
 export const TenantConfigSchema = z.object({
   tenant: z.object({
     slug: z
@@ -432,29 +485,7 @@ export const TenantConfigSchema = z.object({
       footerVariant: FooterVariantSchema.optional(),
     })
     .default({ preset: "studio" }),
-  theme: z.object({
-    colorScheme: z.enum(["dark", "light"]).default("dark"),
-    colors: z.object({
-      bg: z.string().min(4),
-      surface: z.string().min(4),
-      surfaceElevated: z.string().min(4),
-      border: z.string().min(4),
-      text: z.string().min(4),
-      muted: z.string().min(4),
-      primary: z.string().min(4),
-      primaryForeground: z.string().min(4),
-      secondary: z.string().min(4),
-      secondaryForeground: z.string().min(4),
-      accent: z.string().min(4),
-    }),
-    fonts: z.object({
-      heading: FontKeySchema,
-      body: FontKeySchema,
-      accent: FontKeySchema,
-    }),
-    radius: z.enum(["none", "sm", "md", "lg"]).default("md"),
-    surfaceStyle: z.enum(["minimal", "grid", "brutalist"]).default("grid"),
-  }),
+  theme: TenantThemeOverridesSchema.optional(),
   seo: z.object({
     siteUrl: z.string().url(),
     titleTemplate: z.string().min(1),

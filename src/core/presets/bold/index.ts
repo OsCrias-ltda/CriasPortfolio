@@ -1,0 +1,10 @@
+export { boldPreset } from "@/core/presets/bold/preset";
+export { EditorialHeader as BoldHeader } from "@/core/presets/editorial/header";
+export { BoldHero } from "@/core/presets/bold/hero";
+export { StudioServices as BoldServices } from "@/core/presets/studio/services";
+export { StudioProjects as BoldProjects } from "@/core/presets/studio/projects";
+export { StudioProcess as BoldProcess } from "@/core/presets/studio/process";
+export { StudioAbout as BoldAbout } from "@/core/presets/studio/about";
+export { BoldContact } from "@/core/presets/bold/contact";
+export { BoldCtaBanner } from "@/core/presets/bold/cta-banner";
+export { EditorialFooter as BoldFooter } from "@/core/presets/editorial/footer";
