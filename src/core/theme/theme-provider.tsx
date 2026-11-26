@@ -58,12 +58,14 @@ export function buildTenantThemeCss(theme: TenantConfig["theme"]): string {
 
 export function TenantThemeStyle({
   theme,
+  id = "tenant-theme-tokens",
 }: {
   theme: TenantConfig["theme"];
+  id?: string;
 }) {
   return (
     <style
-      id="tenant-theme-tokens"
+      id={id}
       dangerouslySetInnerHTML={{ __html: buildTenantThemeCss(theme) }}
     />
   );

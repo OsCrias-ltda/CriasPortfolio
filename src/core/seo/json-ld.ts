@@ -29,7 +29,12 @@ export function buildHomeJsonLd(config: TenantConfig): Record<string, unknown>[]
       })),
       address: {
         "@type": "PostalAddress",
-        addressRegion: config.business.location.state,
+        ...(config.business.location.city
+          ? { addressLocality: config.business.location.city }
+          : {}),
+        ...(config.business.location.state
+          ? { addressRegion: config.business.location.state }
+          : {}),
         addressCountry: config.business.location.country,
       },
       sameAs: config.business.sameAs,

@@ -35,13 +35,13 @@ export function renderCoreSection(
     case "hero":
       return <HeroSection section={section} config={config} />;
     case "services":
-      return <ServiceList section={section} />;
+      return <ServiceList section={section} config={config} />;
     case "projects":
       return <ProjectShowcase section={section} config={config} />;
     case "process":
-      return <ProcessSteps section={section} />;
+      return <ProcessSteps section={section} config={config} />;
     case "about":
-      return <AboutSplit section={section} />;
+      return <AboutSplit section={section} config={config} />;
     case "faq":
       return <FAQAccordion section={section} />;
     case "valueProposition":

@@ -133,7 +133,7 @@ Trabalhe com **gates de aprovação**. Ao final de cada fase, entregue um artefa
 - Typecheck: `npm run typecheck`
 - Lint: `npm run lint`
 - Build: `npm run build`
-- Tests: `[não configurado ainda]`
+- Tests: `npm test`
 
 Antes de concluir qualquer implementação ou entrega da Fase 4, valide:
 
