@@ -45,11 +45,18 @@ export function isValidDesignPreset(value: string): value is DesignPresetKey {
   return value in DESIGN_PRESETS;
 }
 
+export const DESIGN_PREVIEW_COOKIE = "crias_design_preview";
+
 export function isDesignPreviewEnabled(): boolean {
+  const explicit = process.env.ENABLE_DESIGN_PREVIEW?.trim().toLowerCase();
+  if (explicit === "false" || explicit === "0") {
+    return false;
+  }
+  if (explicit === "true" || explicit === "1") {
+    return true;
+  }
   return (
-    process.env.NODE_ENV !== "production" ||
-    process.env.APP_ENV === "staging" ||
-    process.env.ENABLE_DESIGN_PREVIEW === "true"
+    process.env.NODE_ENV !== "production" || process.env.APP_ENV === "staging"
   );
 }
 

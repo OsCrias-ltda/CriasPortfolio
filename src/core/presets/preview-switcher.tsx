@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Check, Layers, Palette, RotateCcw, X } from "lucide-react";
 import {
   COLOR_PRESET_LIST,
+  DESIGN_PREVIEW_COOKIE,
   DESIGN_PRESET_LIST,
   DESIGN_PRESETS,
 } from "@/core/presets";
@@ -18,6 +19,18 @@ interface DesignPreviewSwitcherProps {
   activePreset: DesignPresetKey;
   activeColorPreset?: ColorPresetKey;
   isPreviewRoute: boolean;
+  /** Quando true, só renderiza se o cookie de runtime (proxy.ts) confirmar que o preview está ativo */
+  runtimeGated?: boolean;
+  initialEnabled?: boolean;
+}
+
+const emptySubscribe = () => () => {};
+
+function hasDesignPreviewCookie(): boolean {
+  if (typeof document === "undefined") return false;
+  return document.cookie
+    .split(";")
+    .some((part) => part.trim() === `${DESIGN_PREVIEW_COOKIE}=1`);
 }
 
 function buildPreviewUrl(
@@ -31,10 +44,21 @@ export function DesignPreviewSwitcher({
   activePreset,
   activeColorPreset,
   isPreviewRoute,
+  runtimeGated = false,
+  initialEnabled = true,
 }: DesignPreviewSwitcherProps) {
+  const cookieEnabled = React.useSyncExternalStore(
+    emptySubscribe,
+    hasDesignPreviewCookie,
+    () => initialEnabled
+  );
   const [collapsed, setCollapsed] = React.useState(false);
   const [showDetails, setShowDetails] = React.useState(false);
   const activeDef = DESIGN_PRESETS[activePreset];
+
+  if (runtimeGated && !cookieEnabled) {
+    return null;
+  }
 
   if (collapsed) {
     return (
