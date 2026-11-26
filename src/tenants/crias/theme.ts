@@ -1,25 +1,10 @@
+import { DESIGN_PRESETS } from "@/core/design/presets";
 import type { TenantConfig } from "@/core/schema/tenant-config.schema";
 
+/**
+ * Tema oficial da Crias Ltda baseado no preset comercial "studio",
+ * preservando a assinatura laranja (#F97316) e tipografia comercial/técnica.
+ */
 export const criasTheme: TenantConfig["theme"] = {
-  colorScheme: "dark",
-  colors: {
-    bg: "#111214",
-    surface: "#1A1C20",
-    surfaceElevated: "#22252B",
-    border: "#2C3038",
-    text: "#F4F5F7",
-    muted: "#A1A7B3",
-    primary: "#F97316",
-    primaryForeground: "#111214",
-    secondary: "#272A30",
-    secondaryForeground: "#F4F5F7",
-    accent: "#FF5A1F",
-  },
-  fonts: {
-    heading: "space-grotesk",
-    body: "inter",
-    accent: "silkscreen",
-  },
-  radius: "md",
-  surfaceStyle: "grid",
+  ...DESIGN_PRESETS.studio.theme,
 };

@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import "./globals.css";
 import { getActiveTenant } from "@/core/data";
-import { getTenantFontClasses } from "@/core/theme/font-registry";
+import { getAllPresetFontClasses } from "@/core/theme/font-registry";
 import { TenantThemeStyle } from "@/core/theme/theme-provider";
 import { buildHomeMetadata } from "@/core/seo/metadata-builder";
-import { TenantLayout } from "@/core/sections/layout/tenant-layout";
 
 export async function generateMetadata(): Promise<Metadata> {
   const config = await getActiveTenant();
@@ -28,7 +27,7 @@ export default async function RootLayout({
     notFound();
   }
 
-  const fontClasses = getTenantFontClasses(config.theme.fonts);
+  const fontClasses = getAllPresetFontClasses(config.theme.fonts);
 
   return (
     <html
@@ -40,7 +39,7 @@ export default async function RootLayout({
         <TenantThemeStyle theme={config.theme} />
       </head>
       <body className="min-h-screen bg-background font-body text-foreground antialiased">
-        <TenantLayout config={config}>{children}</TenantLayout>
+        {children}
       </body>
     </html>
   );

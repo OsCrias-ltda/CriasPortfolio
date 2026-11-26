@@ -102,6 +102,26 @@ export function getTenantFontClasses(fonts: {
   return Array.from(uniqueClasses).join(" ");
 }
 
+export function getAllPresetFontClasses(extraFonts?: {
+  heading: FontKey;
+  body: FontKey;
+  accent: FontKey;
+}): string {
+  const uniqueClasses = new Set<string>([
+    FONT_REGISTRY["plus-jakarta-sans"].variableClass,
+    FONT_REGISTRY["space-grotesk"].variableClass,
+    FONT_REGISTRY["chakra-petch"].variableClass,
+    FONT_REGISTRY.inter.variableClass,
+    FONT_REGISTRY["jetbrains-mono"].variableClass,
+  ]);
+  if (extraFonts) {
+    uniqueClasses.add(FONT_REGISTRY[extraFonts.heading].variableClass);
+    uniqueClasses.add(FONT_REGISTRY[extraFonts.body].variableClass);
+    uniqueClasses.add(FONT_REGISTRY[extraFonts.accent].variableClass);
+  }
+  return Array.from(uniqueClasses).join(" ");
+}
+
 export function getFontCssStack(key: FontKey): string {
   return FONT_REGISTRY[key].cssStack;
 }

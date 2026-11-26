@@ -13,6 +13,14 @@ export function buildLlmsTxt(config: TenantConfig): string {
     (p) => !p.isPlaceholder && p.indexable
   );
 
+  const locationLabel = [
+    config.business.location.city,
+    config.business.location.state,
+    config.business.location.country,
+  ]
+    .filter(Boolean)
+    .join(", ");
+
   const lines: string[] = [
     `# ${config.business.name}`,
     "",
@@ -21,7 +29,7 @@ export function buildLlmsTxt(config: TenantConfig): string {
     "## Visão Geral",
     config.aeo.summaryForLlms,
     "",
-    `- **Localização:** ${config.business.location.state}, ${config.business.location.country}`,
+    `- **Localização:** ${locationLabel}`,
     `- **Área de atuação:** ${config.business.location.areaServed.join(", ")}`,
     `- **Site:** ${siteUrl}`,
     `- **E-mail:** ${config.business.contact.email}`,
