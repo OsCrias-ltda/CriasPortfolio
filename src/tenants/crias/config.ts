@@ -13,9 +13,9 @@ export const criasConfig: TenantConfig = {
     legalName: "Crias Ltda",
     schemaType: "ProfessionalService",
     tagline:
-      "Desenvolvimento de sites, plataformas web e sistemas sob demanda. Base em Goiás, atendimento remoto para todo o Brasil.",
+      "Desenvolvimento de sites, plataformas web e sistemas sob demanda. Atendimento remoto para empresas e profissionais em todo o Brasil.",
     proofStatement:
-      "A Crias Ltda desenvolve sites e plataformas web para empresas e profissionais de todo o Brasil — direto de Goiás, com conversa aberta e foco em colocar seu projeto no ar sem enrolação.",
+      "Os Crias Ltda desenvolve sites e plataformas web para empresas e profissionais de todo o Brasil — com conversa aberta e foco em colocar seu projeto no ar sem enrolação.",
     voiceCard: {
       tone: ["direta", "próxima", "acessível", "animada", "convidativa"],
       avoid: [
@@ -25,9 +25,8 @@ export const criasConfig: TenantConfig = {
       ],
     },
     location: {
-      state: "Goiás",
       country: "Brasil",
-      areaServed: ["Goiás", "Brasil (atendimento remoto)"],
+      areaServed: ["Atendimento remoto em todo o Brasil"],
     },
     contact: {
       email: "grupocrias.sa@gmail.com",
@@ -36,13 +35,13 @@ export const criasConfig: TenantConfig = {
         "Olá, Crias! Tenho uma ideia de projeto web e gostaria de agendar uma conversa.",
       phoneDisplay: "[TODO_COPY: (62) 9XXXX-XXXX]",
     },
-    sameAs: [
-      "https://github.com/OsCrias-ltda",
-      "https://www.linkedin.com/in/CriasLtda/",
-    ],
+    sameAs: ["https://github.com/OsCrias-ltda"],
     socialLinks: [
-      { label: "GitHub", href: "https://github.com/OsCrias-ltda" },
-      { label: "LinkedIn", href: "https://www.linkedin.com/in/CriasLtda/" },
+      {
+        label: "GitHub",
+        href: "https://github.com/OsCrias-ltda",
+        icon: "github",
+      },
     ],
     logo: {
       src: "/Logo.png",
@@ -51,24 +50,26 @@ export const criasConfig: TenantConfig = {
       height: 32,
     },
   },
+  design: {
+    preset: "studio",
+  },
   theme: criasTheme,
   seo: {
     // [TODO_COPY] Substituir pelo domínio oficial de produção quando publicado
     siteUrl: "https://grupocrias.com",
     titleTemplate: "%s | Crias Ltda",
-    defaultTitle:
-      "Crias Ltda — Desenvolvimento de Sites e Plataformas Web | Goiás e Brasil",
+    defaultTitle: "Crias Ltda — Desenvolvimento de Sites e Plataformas Web",
     defaultDescription:
-      "A Crias Ltda desenvolve sites, plataformas web, sistemas de gestão e produtos SaaS para empresas de todo o Brasil. Base em Goiás e atendimento remoto próximo.",
+      "Os Crias Ltda desenvolve sites, plataformas web, sistemas de gestão e produtos SaaS para empresas de todo o Brasil, com atendimento remoto próximo e direto.",
     favicon: "/Logo.png",
   },
   aeo: {
     summaryForLlms:
-      "A Crias Ltda é uma equipe de desenvolvimento web localizada em Goiás que atende remotamente empresas e profissionais autônomos em todo o Brasil. Atua na criação de sites institucionais, plataformas web, sistemas internos de gestão empresarial, emissão de laudos e produtos SaaS para agendamentos e gestão de equipes, além de hospedagem e manutenção contínua.",
+      "Os Crias Ltda é uma equipe de desenvolvimento web que atende remotamente empresas e profissionais autônomos em todo o Brasil. Atua na criação de sites institucionais, plataformas web, sistemas internos de gestão empresarial, emissão de laudos e produtos SaaS para agendamentos e gestão de equipes, além de hospedagem e manutenção contínua.",
     differentials: [
       "Atendimento direto com quem constrói o projeto, sem burocracia.",
       "Experiência prática com sistemas web operacionais (gestão empresarial, laudos técnicos) e plataformas SaaS.",
-      "Base em Goiás com processo 100% estruturado para atendimento remoto em todo o Brasil.",
+      "Processo 100% estruturado para atendimento remoto em todo o Brasil, com entregas parciais transparentes.",
       "Entrega focada em velocidade, clareza de uso e acompanhamento pós-publicação.",
     ],
     aiCrawlers: {
@@ -110,12 +111,11 @@ export const criasConfig: TenantConfig = {
       id: "inicio",
       blockType: "hero",
       enabled: true,
-      variant: "minimal",
-      eyebrow: "BASE EM GOIÁS • REMOTO PARA TODO O BRASIL",
+      eyebrow: "ATENDIMENTO REMOTO • TODO O BRASIL",
       headline:
         "Sites e plataformas web feitos para tirar sua operação do papel.",
       subheadline:
-        "A Crias Ltda desenvolve sites e plataformas web para empresas e profissionais de todo o Brasil — direto de Goiás, com conversa aberta e foco em colocar seu projeto no ar sem enrolação.",
+        "Os Crias Ltda desenvolve sites e plataformas web para empresas e profissionais de todo o Brasil — com conversa aberta e foco em colocar seu projeto no ar sem enrolação.",
       highlights: [
         "Sites rápidos, sistemas de gestão e plataformas SaaS sob demanda.",
         "Conversa direta pelo WhatsApp ou e-mail para alinhar escopo e prazo.",
@@ -234,20 +234,20 @@ export const criasConfig: TenantConfig = {
       blockType: "about",
       enabled: true,
       eyebrow: "04 // QUEM SOMOS",
-      title: "Direto de Goiás, construindo web com proximidade e engenharia",
+      title: "Desenvolvimento web com proximidade, clareza e engenharia",
       paragraphs: [
-        "A Crias Ltda nasceu com uma ideia simples: desenvolvimento web não precisa ser complicado, distante ou cheio de promessas vazias. Gostamos de ouvir o cliente, entender a rotina real da empresa e construir ferramentas que as pessoas realmente tenham prazer em usar.",
-        "Atuamos a partir do estado de Goiás e atendemos remotamente empresas e profissionais de todo o Brasil. Já tiramos do papel sistemas empresariais de gestão, plataformas de laudos técnicos e estamos expandindo nossa frente de produtos SaaS focados em agendamentos e gestão de equipes.",
+        "Os Crias Ltda nasceu com uma ideia simples: desenvolvimento web não precisa ser complicado, distante ou cheio de promessas vazias. Gostamos de ouvir o cliente, entender a rotina real da empresa e construir ferramentas que as pessoas realmente tenham prazer em usar.",
+        "Atendemos remotamente empresas e profissionais de todo o Brasil. Já tiramos do papel sistemas empresariais de gestão, plataformas de laudos técnicos e estamos expandindo nossa frente de produtos SaaS focados em agendamentos e gestão de equipes.",
       ],
       pillars: [
-        { label: "Base", value: "Goiás — Remoto Brasil" },
+        { label: "Atuação", value: "Remoto para todo o Brasil" },
         { label: "Foco", value: "Sites, Sistemas & SaaS" },
         { label: "Atendimento", value: "Direto com o time" },
       ],
       media: {
-        alt: "Equipe e ambiente de desenvolvimento da Crias Ltda",
+        alt: "Equipe e ambiente de desenvolvimento dos Crias Ltda",
         placeholderLabel:
-          "Espaço reservado para foto da equipe ou visual institucional da Crias Ltda",
+          "Espaço reservado para foto da equipe ou visual institucional dos Crias Ltda",
       },
     },
     {
@@ -257,18 +257,18 @@ export const criasConfig: TenantConfig = {
       eyebrow: "05 // PERGUNTAS FREQUENTES",
       title: "Dúvidas comuns antes de começarmos",
       subtitle:
-        "Respostas diretas sobre como a Crias Ltda trabalha, atende e entrega projetos web.",
+        "Respostas diretas sobre como os Crias Ltda trabalha, atende e entrega projetos web.",
       items: [
         {
-          question: "Quais tipos de projetos web a Crias Ltda desenvolve?",
+          question: "Quais tipos de projetos web os Crias Ltda desenvolve?",
           answer:
             "Desenvolvemos sites institucionais, portfólios, plataformas web sob demanda, sistemas internos de gestão empresarial (como controle operacional e emissão de laudos) e produtos SaaS voltados a agendamentos e gestão de equipes. Também cuidamos da hospedagem e manutenção após a entrega.",
         },
         {
           question:
-            "Vocês atendem apenas em Goiás ou clientes de outros estados também?",
+            "Como funciona o atendimento remoto para clientes em todo o Brasil?",
           answer:
-            "Nossa base fica no estado de Goiás, mas atendemos remotamente clientes em todo o Brasil. Todo o processo — da primeira reunião de alinhamento até as entregas parciais e suporte — acontece por videochamada, WhatsApp e e-mail de forma organizada e transparente.",
+            "Atendemos empresas e profissionais de qualquer região do Brasil de forma 100% remota. Todo o processo — da primeira reunião de alinhamento até as entregas parciais, testes e suporte pós-publicação — acontece por videochamada, WhatsApp e e-mail com cronograma claro.",
         },
         {
           question:
@@ -284,7 +284,7 @@ export const criasConfig: TenantConfig = {
         },
         {
           question:
-            "A Crias Ltda também cuida de hospedagem e manutenção depois do lançamento?",
+            "Os Crias Ltda também cuida de hospedagem e manutenção depois do lançamento?",
           answer:
             "Sim. Oferecemos serviço contínuo de hospedagem, configuração de domínio, atualizações técnicas e pequenas evoluções depois que o site ou sistema vai ao ar. Assim sua operação continua estável e segura sem você precisar se preocupar com infraestrutura.",
         },

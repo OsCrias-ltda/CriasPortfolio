@@ -12,6 +12,72 @@ export const FontKeySchema = z.enum([
 
 export type FontKey = z.infer<typeof FontKeySchema>;
 
+export const DesignPresetKeySchema = z.enum([
+  "studio",
+  "editorial",
+  "saas",
+  "changelog",
+  "bold",
+  "warm",
+]);
+export type DesignPresetKey = z.infer<typeof DesignPresetKeySchema>;
+
+export const HeaderVariantSchema = z.enum(["floating", "editorial", "compact"]);
+export type HeaderVariant = z.infer<typeof HeaderVariantSchema>;
+
+export const FooterVariantSchema = z.enum(["standard", "editorial", "compact"]);
+export type FooterVariant = z.infer<typeof FooterVariantSchema>;
+
+export const HeroVariantSchema = z.enum([
+  "studioSplit",
+  "editorial",
+  "saasCentered",
+  "changelog",
+  "boldImpact",
+  "bento",
+  "minimal",
+  "split",
+  "centered",
+  "fullBleed",
+]);
+export type HeroVariant = z.infer<typeof HeroVariantSchema>;
+
+export const ServicesVariantSchema = z.enum([
+  "bento",
+  "editorialList",
+  "compactGrid",
+  "changelogList",
+  "cards",
+]);
+export type ServicesVariant = z.infer<typeof ServicesVariantSchema>;
+
+export const ProjectsVariantSchema = z.enum([
+  "featuredList",
+  "asymmetric",
+  "bentoShowcase",
+  "changelogFeed",
+  "grid",
+]);
+export type ProjectsVariant = z.infer<typeof ProjectsVariantSchema>;
+
+export const ProcessVariantSchema = z.enum([
+  "stickySplit",
+  "timeline",
+  "stepper",
+  "cards",
+]);
+export type ProcessVariant = z.infer<typeof ProcessVariantSchema>;
+
+export const AboutVariantSchema = z.enum(["studioCard", "editorial", "split"]);
+export type AboutVariant = z.infer<typeof AboutVariantSchema>;
+
+export const ContactVariantSchema = z.enum([
+  "focusedForm",
+  "minimalDirect",
+  "splitCards",
+]);
+export type ContactVariant = z.infer<typeof ContactVariantSchema>;
+
 export const CtaActionSchema = z.object({
   label: z.string().min(1),
   kind: z.enum(["whatsapp", "email", "anchor", "url"]),
@@ -84,9 +150,7 @@ export const HeroSectionSchema = z.object({
   id: z.string().default("inicio"),
   blockType: z.literal("hero"),
   enabled: z.boolean().default(true),
-  variant: z
-    .enum(["minimal", "split", "centered", "editorial", "fullBleed"])
-    .default("minimal"),
+  variant: HeroVariantSchema.optional(),
   eyebrow: z.string().optional(),
   headline: z.string().min(1),
   subheadline: z.string().min(1),
@@ -100,6 +164,7 @@ export const ServicesSectionSchema = z.object({
   id: z.string().default("servicos"),
   blockType: z.literal("services"),
   enabled: z.boolean().default(true),
+  variant: ServicesVariantSchema.optional(),
   eyebrow: z.string().optional(),
   title: z.string().min(1),
   subtitle: z.string().optional(),
@@ -131,6 +196,7 @@ export const ProjectsSectionSchema = z.object({
   id: z.string().default("projetos"),
   blockType: z.literal("projects"),
   enabled: z.boolean().default(true),
+  variant: ProjectsVariantSchema.optional(),
   eyebrow: z.string().optional(),
   title: z.string().min(1),
   subtitle: z.string().optional(),
@@ -144,6 +210,7 @@ export const ProcessSectionSchema = z.object({
   id: z.string().default("como-funciona"),
   blockType: z.literal("process"),
   enabled: z.boolean().default(true),
+  variant: ProcessVariantSchema.optional(),
   eyebrow: z.string().optional(),
   title: z.string().min(1),
   subtitle: z.string().optional(),
@@ -162,6 +229,7 @@ export const AboutSectionSchema = z.object({
   id: z.string().default("sobre"),
   blockType: z.literal("about"),
   enabled: z.boolean().default(true),
+  variant: AboutVariantSchema.optional(),
   eyebrow: z.string().optional(),
   title: z.string().min(1),
   paragraphs: z.array(z.string().min(1)).min(1),
@@ -266,6 +334,7 @@ export const ContactSectionSchema = z.object({
   id: z.string().default("contato"),
   blockType: z.literal("contact"),
   enabled: z.boolean().default(true),
+  variant: ContactVariantSchema.optional(),
   eyebrow: z.string().optional(),
   title: z.string().min(1),
   subtitle: z.string().min(1),
@@ -325,7 +394,7 @@ export const TenantConfigSchema = z.object({
     }),
     location: z.object({
       city: z.string().optional(),
-      state: z.string().min(1),
+      state: z.string().min(1).optional(),
       country: z.string().default("Brasil"),
       areaServed: z.array(z.string().min(1)).min(1),
     }),
@@ -341,6 +410,9 @@ export const TenantConfigSchema = z.object({
         z.object({
           label: z.string().min(1),
           href: z.string().url(),
+          icon: z
+            .enum(["github", "instagram", "linkedin", "x", "youtube", "globe"])
+            .optional(),
         })
       )
       .default([]),
@@ -353,6 +425,13 @@ export const TenantConfigSchema = z.object({
       })
       .optional(),
   }),
+  design: z
+    .object({
+      preset: DesignPresetKeySchema.default("studio"),
+      headerVariant: HeaderVariantSchema.optional(),
+      footerVariant: FooterVariantSchema.optional(),
+    })
+    .default({ preset: "studio" }),
   theme: z.object({
     colorScheme: z.enum(["dark", "light"]).default("dark"),
     colors: z.object({

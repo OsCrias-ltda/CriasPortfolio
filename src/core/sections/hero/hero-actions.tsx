@@ -31,7 +31,7 @@ export function HeroActions({
   return (
     <div
       className={cn(
-        "flex flex-col gap-3 sm:flex-row sm:items-center",
+        "flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center",
         align === "center" && "justify-center"
       )}
     >

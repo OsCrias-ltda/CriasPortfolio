@@ -5,10 +5,15 @@ import type { TenantConfig } from "@/core/schema/tenant-config.schema";
 
 interface TenantLayoutProps {
   config: TenantConfig;
+  homeHref?: string;
   children: React.ReactNode;
 }
 
-export function TenantLayout({ config, children }: TenantLayoutProps) {
+export function TenantLayout({
+  config,
+  homeHref = "/",
+  children,
+}: TenantLayoutProps) {
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <a
@@ -17,11 +22,11 @@ export function TenantLayout({ config, children }: TenantLayoutProps) {
       >
         Pular para o conteúdo principal
       </a>
-      <Header config={config} />
+      <Header config={config} homeHref={homeHref} />
       <main id="conteudo-principal" className="flex-1">
         {children}
       </main>
-      <Footer config={config} />
+      <Footer config={config} homeHref={homeHref} />
     </div>
   );
 }
