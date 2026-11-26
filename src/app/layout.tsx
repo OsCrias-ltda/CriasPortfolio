@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import "./globals.css";
 import { getActiveTenant } from "@/core/data";
+import { resolveTenantTheme } from "@/core/presets";
 import { getAllPresetFontClasses } from "@/core/theme/font-registry";
 import { TenantThemeStyle } from "@/core/theme/theme-provider";
 import { buildHomeMetadata } from "@/core/seo/metadata-builder";
@@ -27,7 +28,8 @@ export default async function RootLayout({
     notFound();
   }
 
-  const fontClasses = getAllPresetFontClasses(config.theme.fonts);
+  const resolvedTheme = resolveTenantTheme(config);
+  const fontClasses = getAllPresetFontClasses(resolvedTheme.fonts);
 
   return (
     <html
@@ -36,7 +38,7 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <TenantThemeStyle theme={config.theme} />
+        <TenantThemeStyle theme={resolvedTheme} />
       </head>
       <body className="min-h-screen bg-background font-body text-foreground antialiased">
         {children}

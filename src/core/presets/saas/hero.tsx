@@ -12,7 +12,7 @@ import type { z } from "zod";
 
 type HeroSectionData = z.infer<typeof HeroSectionSchema>;
 
-export function HeroSaasCentered({
+export function SaasHero({
   section,
   config,
 }: {
@@ -28,7 +28,6 @@ export function HeroSaasCentered({
       id={section.id}
       className="relative overflow-hidden py-16 sm:py-24 lg:py-28"
     >
-      {/* Gradiente sutil comercial no topo */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-gradient-to-b from-primary/6 via-transparent to-transparent"
@@ -80,7 +79,6 @@ export function HeroSaasCentered({
           )}
         </div>
 
-        {/* Showcase horizontal estilo produto SaaS */}
         <div className="mt-14 sm:mt-16">
           {section.media?.src ? (
             <div className="mx-auto max-w-5xl rounded-2xl border border-border bg-surface p-3 shadow-xl shadow-black/5">

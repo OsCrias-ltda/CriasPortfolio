@@ -4,11 +4,14 @@ import path from "node:path";
 import { describe, it } from "node:test";
 import { TenantConfigSchema } from "@/core/schema/tenant-config.schema";
 import {
+  COLOR_PRESETS,
+  COLOR_PRESET_LIST,
   DESIGN_PRESETS,
   DESIGN_PRESET_LIST,
   applyDesignPreset,
   resolveSectionVariant,
-} from "@/core/design/presets";
+  resolveTenantTheme,
+} from "@/core/presets";
 import { buildHomeJsonLd, buildProjectJsonLd } from "@/core/seo/json-ld";
 import { buildLlmsTxt } from "@/core/seo/llms-builder";
 import {
@@ -61,15 +64,70 @@ describe("Schema & TenantConfig", () => {
 });
 
 describe("Design Presets & Composição", () => {
-  it("valida todos os presets registrados no Core via Zod", () => {
+  it("valida todos os presets registrados preservando cores e tipografia do tenant", () => {
     assert.equal(DESIGN_PRESET_LIST.length, 6);
 
     for (const preset of DESIGN_PRESET_LIST) {
       const applied = applyDesignPreset(criasConfig, preset.key);
       const parsed = TenantConfigSchema.parse(applied);
+      const resolved = resolveTenantTheme(parsed);
+
       assert.equal(parsed.design.preset, preset.key);
-      assert.equal(parsed.theme.colors.primary, preset.theme.colors.primary);
+      // Cor e tipografia propostas pelo tenant prevalecem sobre o preset
+      assert.equal(resolved.colors.primary, criasConfig.theme?.colors?.primary);
+      assert.equal(resolved.fonts.heading, criasConfig.theme?.fonts?.heading);
+      // Superfícies e esquema claro/escuro herdam do preset como fallback
+      assert.equal(resolved.colorScheme, preset.theme.colorScheme);
+      assert.equal(resolved.colors.bg, preset.theme.colors.bg);
     }
+  });
+
+  it("usa cores e tipografia do preset como fallback quando o tenant não define theme", () => {
+    const tenantWithoutTheme = TenantConfigSchema.parse({
+      ...criasConfig,
+      design: { preset: "bold" },
+      theme: undefined,
+    });
+    const resolved = resolveTenantTheme(tenantWithoutTheme);
+
+    assert.equal(resolved.colors.primary, DESIGN_PRESETS.bold.theme.colors.primary);
+    assert.equal(resolved.fonts.heading, DESIGN_PRESETS.bold.theme.fonts.heading);
+    assert.equal(resolved.colors.bg, DESIGN_PRESETS.bold.theme.colors.bg);
+  });
+
+  it("calcula primaryForeground acessível quando o tenant propõe apenas colors.primary", () => {
+    const darkPrimaryTenant = TenantConfigSchema.parse({
+      ...criasConfig,
+      theme: { colors: { primary: "#1D4ED8" } },
+    });
+    const lightPrimaryTenant = TenantConfigSchema.parse({
+      ...criasConfig,
+      theme: { colors: { primary: "#F97316" } },
+    });
+
+    assert.equal(
+      resolveTenantTheme(darkPrimaryTenant).colors.primaryForeground,
+      "#FFFFFF"
+    );
+    assert.equal(
+      resolveTenantTheme(lightPrimaryTenant).colors.primaryForeground,
+      "#090B0F"
+    );
+  });
+
+  it("aplica presets de cor adaptados ao esquema dark/light mantendo âncoras no preview", () => {
+    assert.equal(COLOR_PRESET_LIST.length, 8);
+
+    const blueEditorial = applyDesignPreset(criasConfig, "editorial", "blue");
+    const parsed = TenantConfigSchema.parse(blueEditorial);
+    const resolved = resolveTenantTheme(parsed);
+
+    assert.equal(resolved.colors.primary, COLOR_PRESETS.blue.light.primary);
+    assert.equal(resolved.colors.primaryForeground, "#FFFFFF");
+    assert.equal(
+      parsed.navigation.items[0]?.href,
+      "/preview/editorial?color=blue#servicos"
+    );
   });
 
   it("reescreve âncoras internas (/#...) para manter o preset durante o preview", () => {
