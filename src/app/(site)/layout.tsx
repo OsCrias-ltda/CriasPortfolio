@@ -14,17 +14,17 @@ export default async function SiteLayout({
     notFound();
   }
 
-  const showPreviewSwitcher = isDesignPreviewEnabled();
+  const initialPreviewEnabled = isDesignPreviewEnabled();
 
   return (
     <TenantLayout config={config}>
       {children}
-      {showPreviewSwitcher && (
-        <DesignPreviewSwitcher
-          activePreset={config.design.preset}
-          isPreviewRoute={false}
-        />
-      )}
+      <DesignPreviewSwitcher
+        activePreset={config.design.preset}
+        isPreviewRoute={false}
+        runtimeGated
+        initialEnabled={initialPreviewEnabled}
+      />
     </TenantLayout>
   );
 }
