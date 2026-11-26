@@ -9,6 +9,7 @@ import {
   DESIGN_PRESETS,
   DESIGN_PRESET_LIST,
   applyDesignPreset,
+  isDesignPreviewEnabled,
   resolveSectionVariant,
   resolveTenantTheme,
 } from "@/core/presets";
@@ -128,6 +129,42 @@ describe("Design Presets & Composição", () => {
       parsed.navigation.items[0]?.href,
       "/preview/editorial?color=blue#servicos"
     );
+  });
+
+  it("respeita toggle explícito ENABLE_DESIGN_PREVIEW sobre APP_ENV em runtime", () => {
+    const originalEnv = {
+      NODE_ENV: process.env.NODE_ENV,
+      APP_ENV: process.env.APP_ENV,
+      ENABLE_DESIGN_PREVIEW: process.env.ENABLE_DESIGN_PREVIEW,
+    };
+
+    try {
+      const env = process.env as Record<string, string | undefined>;
+      env.NODE_ENV = "production";
+      env.APP_ENV = "staging";
+      delete env.ENABLE_DESIGN_PREVIEW;
+      assert.equal(isDesignPreviewEnabled(), true);
+
+      env.ENABLE_DESIGN_PREVIEW = "false";
+      assert.equal(isDesignPreviewEnabled(), false);
+
+      env.APP_ENV = "production";
+      env.ENABLE_DESIGN_PREVIEW = "true";
+      assert.equal(isDesignPreviewEnabled(), true);
+
+      delete env.ENABLE_DESIGN_PREVIEW;
+      assert.equal(isDesignPreviewEnabled(), false);
+    } finally {
+      const env = process.env as Record<string, string | undefined>;
+      env.NODE_ENV = originalEnv.NODE_ENV;
+      if (originalEnv.APP_ENV === undefined) delete env.APP_ENV;
+      else env.APP_ENV = originalEnv.APP_ENV;
+      if (originalEnv.ENABLE_DESIGN_PREVIEW === undefined) {
+        delete env.ENABLE_DESIGN_PREVIEW;
+      } else {
+        env.ENABLE_DESIGN_PREVIEW = originalEnv.ENABLE_DESIGN_PREVIEW;
+      }
+    }
   });
 
   it("reescreve âncoras internas (/#...) para manter o preset durante o preview", () => {
